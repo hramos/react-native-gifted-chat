@@ -16,6 +16,7 @@ import { LeftRightStyle, IMessage } from './Models'
 import { StylePropType } from './utils'
 import { useChatContext } from './GiftedChatContext'
 import { error } from './logging'
+import Markdown from 'react-native-markdown-display';
 
 const WWW_URL_PATTERN = /^www\./i
 
@@ -149,22 +150,14 @@ export function MessageText<TMessage extends IMessage = IMessage>({
         containerStyle && containerStyle[position],
       ]}
     >
-      <ParsedText
-        style={[
+      <Markdown style={[
           styles[position].text,
           textStyle && textStyle[position],
           customTextStyle,
         ]}
-        parse={[
-          ...parsePatterns!(linkStyle as TextStyle),
-          { type: 'url', style: linkStyle, onPress: onUrlPress },
-          { type: 'phone', style: linkStyle, onPress: onPhonePress },
-          { type: 'email', style: linkStyle, onPress: onEmailPress },
-        ]}
-        childrenProps={{ ...textProps }}
-      >
+        childrenProps={{ ...textProps }}>
         {currentMessage!.text}
-      </ParsedText>
+      </Markdown>
     </View>
   )
 }
